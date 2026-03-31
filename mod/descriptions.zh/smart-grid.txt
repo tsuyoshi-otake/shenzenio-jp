@@ -1,6 +1,6 @@
 ﻿* *meter-in*，*meter-out*は，このノードを建物のスマートグリッドの電力計に接続するXBus入出力．
 * *lower-in*，*lower-out*は，このノードを下位IDのノードに接続するXBus入出力．
-*higher-in*，*higher-out*は，このノードを上位IDのノードに接続するXBus入出力．
+* *higher-in*，*higher-out*は，このノードを上位IDのノードに接続するXBus入出力．
 * パケットの先頭の値は宛先のID番号であり，パケットの処理方法は図に従って決定される：
 
 ##############

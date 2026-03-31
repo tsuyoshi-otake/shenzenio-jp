@@ -1,3 +1,3 @@
-﻿* *control-in*工場の機械に接続される単純出力．
+﻿* *control-in*は工場の機械に接続される単純入力．
 * *control-out*は別の工場の機械に接続される単純出力．
-* *control-in*の制御信号を 2 倍にして*control-out*に出力する．
+* *control-in*の制御信号を2時間単位遅延させて*control-out*に出力する．
