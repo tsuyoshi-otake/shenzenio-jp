@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+  <Package Name="SHENZHEN I/O 日本語化MOD"
+           Manufacturer="shenzenio-jp"
+           Version="1.0.0.0"
+           UpgradeCode="8f4e6b2a-3c5d-4e7f-b8a9-1d2e3f4a5b6c"
+           Compressed="yes"
+           InstallerVersion="500"
+           Codepage="65001"
+           Scope="perUser">
+
+    <SummaryInformation Description="SHENZHEN I/O 日本語化MOD インストーラー" />
+    <MajorUpgrade DowngradeErrorMessage="新しいバージョンが既にインストールされています。"
+                  Schedule="afterInstallValidate" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Launch Condition="GAMEDIR OR Installed"
+            Message="SHENZHEN I/O のインストール先が見つかりません。&#xA;Steamでゲームがインストールされているか確認してください。" />
+
+    <Property Id="ARPNOREPAIR" Value="yes" />
+
+    <ComponentGroup Id="ProductComponents">
+      <Component Id="RegistryComponent" Guid="a7b8c9d0-e1f2-3456-7890-abcdef123456">
+        <RegistryValue Root="HKCU" Key="Software\ShenzenIoJpMod" Name="Installed" Value="1" Type="integer" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <Feature Id="MainFeature" Title="SHENZHEN I/O 日本語化MOD" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <!-- ── カスタムアクション ─────────────────────────── -->
+
+    <Binary Id="CustomActionDll"
+            SourceFile="$(var.CustomAction.TargetDir)\CustomAction.CA.dll" />
+
+    <CustomAction Id="CA_FindGame"
+                  BinaryRef="CustomActionDll"
+                  DllEntry="FindGameDirectory"
+                  Execute="immediate"
+                  Return="check" />
+
+    <CustomAction Id="CA_Install"
+                  BinaryRef="CustomActionDll"
+                  DllEntry="InstallMod"
+                  Execute="immediate"
+                  Return="check" />
+
+    <CustomAction Id="CA_Uninstall"
+                  BinaryRef="CustomActionDll"
+                  DllEntry="UninstallMod"
+                  Execute="immediate"
+                  Return="ignore" />
+
+    <!-- ── スケジューリング ───────────────────────────── -->
+
+    <InstallUISequence>
+      <Custom Action="CA_FindGame" Before="LaunchConditions" />
+    </InstallUISequence>
+
+    <InstallExecuteSequence>
+      <Custom Action="CA_FindGame" Before="LaunchConditions" />
+
+      <!-- アンインストール: 完全削除 OR アップグレード時 -->
+      <Custom Action="CA_Uninstall" Before="RemoveFiles"
+              Condition="Installed AND (REMOVE~=&quot;ALL&quot; OR UPGRADINGPRODUCTCODE)" />
+
+      <!-- インストール: 新規インストール OR アップグレード時 -->
+      <Custom Action="CA_Install" After="InstallFiles"
+              Condition="NOT Installed OR NOT REMOVE~=&quot;ALL&quot;" />
+    </InstallExecuteSequence>
+
+    <!-- ── UI ─────────────────────────────────────────── -->
+    <ui:WixUI Id="WixUI_Minimal" />
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+  </Package>
+</Wix>
