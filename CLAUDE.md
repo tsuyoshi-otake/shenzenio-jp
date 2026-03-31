@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-SHENZHEN I/O（Steam版パズルゲーム）の日本語化MOD。[birdManIkioiShota/SHENZHEN_IO_JP](https://github.com/birdManIkioiShota/SHENZHEN_IO_JP) のフォークで、オリジナルの翻訳データを保持しつつ WiX v6 ベースの MSI インストーラーを追加したもの。
+SHENZHEN I/O（Steam版パズルゲーム）の日本語化MOD。[birdManIkioiShota/SHENZHEN_IO_JP](https://github.com/birdManIkioiShota/SHENZHEN_IO_JP) のフォークで、オリジナルの翻訳データを修正（52件）し、WiX v6 ベースの MSI インストーラーを追加したもの。
 
 ## Build
 
